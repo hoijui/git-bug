@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/MichaelMure/gocui"
+
 	"github.com/MichaelMure/git-bug/bug"
 	"github.com/MichaelMure/git-bug/cache"
+	"github.com/MichaelMure/git-bug/termui/mardown"
 	"github.com/MichaelMure/git-bug/util/colors"
 	"github.com/MichaelMure/git-bug/util/git"
 	"github.com/MichaelMure/git-bug/util/text"
-	"github.com/MichaelMure/gocui"
 )
 
 const showBugView = "showBugView"
@@ -206,31 +208,6 @@ func (sb *showBug) renderMain(g *gocui.Gui, mainView *gocui.View) error {
 
 	sb.mainSelectableView = nil
 
-	createTimelineItem := snap.Timeline[0].(*bug.CreateTimelineItem)
-
-	edited := ""
-	if createTimelineItem.Edited() {
-		edited = " (edited)"
-	}
-
-	bugHeader := fmt.Sprintf("[%s] %s\n\n[%s] %s opened this bug on %s%s",
-		colors.Cyan(snap.HumanId()),
-		colors.Bold(snap.Title),
-		colors.Yellow(snap.Status),
-		colors.Magenta(snap.Author.DisplayName()),
-		snap.CreatedAt.Format(timeLayout),
-		edited,
-	)
-	bugHeader, lines := text.Wrap(bugHeader, maxX)
-
-	v, err := sb.createOpView(g, showBugHeaderView, x0, y0, maxX+1, lines, false)
-	if err != nil {
-		return err
-	}
-
-	_, _ = fmt.Fprint(v, bugHeader)
-	y0 += lines + 1
-
 	for _, op := range snap.Timeline {
 		viewName := op.Hash().String()
 
@@ -242,16 +219,39 @@ func (sb *showBug) renderMain(g *gocui.Gui, mainView *gocui.View) error {
 		case *bug.CreateTimelineItem:
 			create := op.(*bug.CreateTimelineItem)
 
-			var content string
-			var lines int
+			edited := ""
+			if create.Edited() {
+				edited = " (edited)"
+			}
 
+			bugHeader := fmt.Sprintf("[%s] %s\n\n[%s] %s opened this bug on %s%s",
+				colors.Cyan(snap.HumanId()),
+				colors.Bold(snap.Title),
+				colors.Yellow(snap.Status),
+				colors.Magenta(snap.Author.DisplayName()),
+				snap.CreatedAt.Format(timeLayout),
+				edited,
+			)
+			bugHeader, lines := text.Wrap(bugHeader, maxX)
+
+			v, err := sb.createOpView(g, showBugHeaderView, x0, y0, maxX+1, lines, false)
+			if err != nil {
+				return err
+			}
+
+			_, _ = fmt.Fprint(v, bugHeader)
+			y0 += lines + 1
+
+			var content string
 			if create.MessageIsEmpty() {
 				content, lines = text.WrapLeftPadded(emptyMessagePlaceholder(), maxX-1, 4)
 			} else {
-				content, lines = text.WrapLeftPadded(create.Message, maxX-1, 4)
+				out := markdown.Render(create.Message, maxX-1, 4)
+				lines = bytes.Count(out, []byte("\n"))
+				content = string(out)
 			}
 
-			v, err := sb.createOpView(g, viewName, x0, y0, maxX+1, lines, true)
+			v, err = sb.createOpView(g, viewName, x0, y0, maxX+1, lines, true)
 			if err != nil {
 				return err
 			}
@@ -270,7 +270,7 @@ func (sb *showBug) renderMain(g *gocui.Gui, mainView *gocui.View) error {
 			if comment.MessageIsEmpty() {
 				message, _ = text.WrapLeftPadded(emptyMessagePlaceholder(), maxX-1, 4)
 			} else {
-				message, _ = text.WrapLeftPadded(comment.Message, maxX-1, 4)
+				message = string(markdown.Render(comment.Message, maxX-1, 4))
 			}
 
 			content := fmt.Sprintf("%s commented on %s%s\n\n%s",
@@ -279,7 +279,7 @@ func (sb *showBug) renderMain(g *gocui.Gui, mainView *gocui.View) error {
 				edited,
 				message,
 			)
-			content, lines = text.Wrap(content, maxX)
+			content, lines := text.Wrap(content, maxX)
 
 			v, err := sb.createOpView(g, viewName, x0, y0, maxX+1, lines, true)
 			if err != nil {

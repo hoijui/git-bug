@@ -1,4 +1,4 @@
-package mardown
+package markdown
 
 import (
 	"bytes"
@@ -39,8 +39,6 @@ func newRenderer(lineWidth int, leftPad int) *renderer {
 }
 
 func (r *renderer) RenderNode(w io.Writer, node *blackfriday.Node, entering bool) blackfriday.WalkStatus {
-	fmt.Println(node, entering)
-
 	pad := strings.Repeat(" ", r.leftPad)
 
 	switch node.Type {
@@ -136,7 +134,7 @@ func (r *renderer) RenderNode(w io.Writer, node *blackfriday.Node, entering bool
 	case blackfriday.Hardbreak:
 
 	case blackfriday.Code:
-		fmt.Println(node)
+		//fmt.Println(node)
 
 	case blackfriday.HTMLSpan:
 

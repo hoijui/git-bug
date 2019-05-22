@@ -1,4 +1,4 @@
-package mardown
+package markdown
 
 import (
 	"github.com/MichaelMure/git-bug/util/colors"
