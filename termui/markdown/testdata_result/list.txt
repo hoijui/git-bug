@@ -8,5 +8,5 @@
 
     A definition list:
 
-      Markdown
-          Text-to-HTML conversion tool
+    [32m  [0mMarkdown
+    [32m  [0mText-to-HTML conversion tool

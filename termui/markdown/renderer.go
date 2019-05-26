@@ -46,6 +46,7 @@ func (r *renderer) RenderNode(w io.Writer, node *blackfriday.Node, entering bool
 		// Nothing to do
 
 	case blackfriday.BlockQuote:
+		// fmt.Println(node)
 
 	case blackfriday.List:
 		if !entering && node.Next != nil {
@@ -57,7 +58,11 @@ func (r *renderer) RenderNode(w io.Writer, node *blackfriday.Node, entering bool
 	case blackfriday.Item:
 		// write the prefix and let Paragraph handle the rest
 		if entering {
-			r.paragraph.WriteString(r.itemPrefix(node))
+			if node.ListFlags&blackfriday.ListTypeDefinition != 0 {
+				r.paragraph.WriteString(colors.Green(r.itemPrefix(node)))
+			} else {
+				r.paragraph.WriteString(r.itemPrefix(node))
+			}
 		}
 
 	case blackfriday.Paragraph:
@@ -90,7 +95,7 @@ func (r *renderer) RenderNode(w io.Writer, node *blackfriday.Node, entering bool
 
 		// output the text, truncated if needed, no line break
 		truncated := runewidth.Truncate(rendered, r.lineWidth, "…")
-		colored := shade(node.Level)(truncated)
+		colored := headingShade(node.Level)(truncated)
 		_, _ = fmt.Fprintln(w, colored)
 
 		// render the underline, if any
@@ -207,7 +212,7 @@ func (r *renderer) renderFormattedCodeBlock(w io.Writer, code string) {
 	// remove the trailing line break
 	code = strings.TrimRight(code, "\n")
 
-	pad := strings.Repeat(" ", r.leftPad) + colors.GreenBold("｜ ")
+	pad := strings.Repeat(" ", r.leftPad) + colors.GreenBold("┃ ")
 
 	output, _ := text.WrapWithPad(code, r.lineWidth, pad)
 	_, _ = fmt.Fprint(w, output)
@@ -236,7 +241,7 @@ func (r *renderer) itemPrefix(node *blackfriday.Node) string {
 
 	// header of a definition
 	case node.ListData.ListFlags&blackfriday.ListTypeDefinition != 0:
-		return padding + "    "
+		return padding
 
 	// content of a definition
 	case node.ListData.ListFlags&blackfriday.ListTypeTerm != 0:
