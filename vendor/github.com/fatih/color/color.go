@@ -137,7 +137,7 @@ func (c *Color) Set() *Color {
 		return c
 	}
 
-	fmt.Fprintf(Output, c.format())
+	fmt.Fprintf(Output, c.Format())
 	return c
 }
 
@@ -154,7 +154,7 @@ func (c *Color) setWriter(w io.Writer) *Color {
 		return c
 	}
 
-	fmt.Fprintf(w, c.format())
+	fmt.Fprintf(w, c.Format())
 	return c
 }
 
@@ -362,14 +362,14 @@ func (c *Color) wrap(s string) string {
 		return s
 	}
 
-	return c.format() + s + c.unformat()
+	return c.Format() + s + c.Unformat()
 }
 
-func (c *Color) format() string {
+func (c *Color) Format() string {
 	return fmt.Sprintf("%s[%sm", escape, c.sequence())
 }
 
-func (c *Color) unformat() string {
+func (c *Color) Unformat() string {
 	return fmt.Sprintf("%s[%dm", escape, Reset)
 }
 
