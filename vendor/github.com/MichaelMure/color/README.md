@@ -1,6 +1,11 @@
-# Color [![GoDoc](https://godoc.org/github.com/fatih/color?status.svg)](https://godoc.org/github.com/fatih/color) [![Build Status](https://img.shields.io/travis/fatih/color.svg?style=flat-square)](https://travis-ci.org/fatih/color)
+# Fork notice
+
+This is a minor fork of the [original project](https://github.com/fatih/color) by Fatih Arslan.
+
+This fork is only there to support a special need for the [git-bug](https://github.com/MichaelMure/git-bug) project.
 
 
+# Color [![GoDoc](https://godoc.org/github.com/MichaelMure/color?status.svg)](https://godoc.org/github.com/MichaelMure/color)
 
 Color lets you use colorized outputs in terms of [ANSI Escape
 Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors) in Go (Golang). It
@@ -14,7 +19,7 @@ suits you.
 ## Install
 
 ```bash
-go get github.com/fatih/color
+go get github.com/MichaelMure/color
 ```
 
 Note that the `vendor` folder is here for stability. Remove the folder if you
@@ -175,5 +180,5 @@ c.Println("This prints again cyan...")
 
 ## License
 
-The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
+The MIT License (MIT) - see [`LICENSE.md`](https://github.com/MichaelMure/color/blob/master/LICENSE.md) for more details
 
