@@ -45,7 +45,7 @@
   branch = "master"
 
 [[constraint]]
-  name = "github.com/MichaelMure/color"
+  name = "github.com/fatih/color"
   version = "1.8.0"
 
 [[constraint]]

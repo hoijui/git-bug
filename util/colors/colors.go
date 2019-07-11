@@ -1,6 +1,6 @@
 package colors
 
-import "github.com/MichaelMure/color"
+import "github.com/fatih/color"
 
 var (
 	Bold       = color.New(color.Bold).SprintFunc()
