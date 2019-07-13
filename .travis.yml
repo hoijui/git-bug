@@ -1,8 +1,6 @@
 matrix:
   include:
   - language: go
-    go: "1.9"
-  - language: go
     go: "1.10"
   - language: go
     go: "1.11"
@@ -50,5 +48,5 @@ deploy:
   file: dist/**/*
   on:
     repo: MichaelMure/git-bug
-    go: 1.11
+    go: 1.12
     tags: true
