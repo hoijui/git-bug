@@ -129,13 +129,25 @@ func (c *RepoCache) StoreConfig(key string, value string) error {
 	return c.repo.StoreConfig(key, value)
 }
 
+func (c *RepoCache) StoreGlobalConfig(key string, value string) error {
+	return c.repo.StoreGlobalConfig(key, value)
+}
+
 // ReadConfigs read all key/value pair matching the key prefix
 func (c *RepoCache) ReadConfigs(keyPrefix string) (map[string]string, error) {
 	return c.repo.ReadConfigs(keyPrefix)
 }
 
+func (c *RepoCache) ReadGlobalConfigs(keyPrefix string) (map[string]string, error) {
+	return c.repo.ReadGlobalConfigs(keyPrefix)
+}
+
 // ReadConfigBool read a single boolean value from the config
 func (c *RepoCache) ReadConfigBool(key string) (bool, error) {
+	return c.repo.ReadConfigBool(key)
+}
+
+func (c *RepoCache) ReadGlobalConfigBool(key string) (bool, error) {
 	return c.repo.ReadConfigBool(key)
 }
 
@@ -144,8 +156,16 @@ func (c *RepoCache) ReadConfigString(key string) (string, error) {
 	return c.repo.ReadConfigString(key)
 }
 
+func (c *RepoCache) ReadGlobalConfigString(key string) (string, error) {
+	return c.repo.ReadConfigString(key)
+}
+
 // RmConfigs remove all key/value pair matching the key prefix
 func (c *RepoCache) RmConfigs(keyPrefix string) error {
+	return c.repo.RmConfigs(keyPrefix)
+}
+
+func (c *RepoCache) RmGlobalConfigs(keyPrefix string) error {
 	return c.repo.RmConfigs(keyPrefix)
 }
 

@@ -14,13 +14,14 @@ var _ ClockedRepo = &mockRepoForTest{}
 
 // mockRepoForTest defines an instance of Repo that can be used for testing.
 type mockRepoForTest struct {
-	config      map[string]string
-	blobs       map[git.Hash][]byte
-	trees       map[git.Hash]string
-	commits     map[git.Hash]commit
-	refs        map[string]git.Hash
-	createClock lamport.Clock
-	editClock   lamport.Clock
+	config       map[string]string
+	globalConfig map[string]string
+	blobs        map[git.Hash][]byte
+	trees        map[git.Hash]string
+	commits      map[git.Hash]commit
+	refs         map[string]git.Hash
+	createClock  lamport.Clock
+	editClock    lamport.Clock
 }
 
 type commit struct {
@@ -71,10 +72,27 @@ func (r *mockRepoForTest) StoreConfig(key string, value string) error {
 	return nil
 }
 
+func (r *mockRepoForTest) StoreGlobalConfig(key string, value string) error {
+	r.globalConfig[key] = value
+	return nil
+}
+
 func (r *mockRepoForTest) ReadConfigs(keyPrefix string) (map[string]string, error) {
 	result := make(map[string]string)
 
 	for key, val := range r.config {
+		if strings.HasPrefix(key, keyPrefix) {
+			result[key] = val
+		}
+	}
+
+	return result, nil
+}
+
+func (r *mockRepoForTest) ReadGlobalConfigs(keyPrefix string) (map[string]string, error) {
+	result := make(map[string]string)
+
+	for key, val := range r.globalConfig {
 		if strings.HasPrefix(key, keyPrefix) {
 			result[key] = val
 		}
@@ -93,6 +111,16 @@ func (r *mockRepoForTest) ReadConfigBool(key string) (bool, error) {
 	return strconv.ParseBool(val)
 }
 
+func (r *mockRepoForTest) ReadGlobalConfigBool(key string) (bool, error) {
+	// unlike git, the mock can only store one value for the same key
+	val, ok := r.globalConfig[key]
+	if !ok {
+		return false, ErrNoConfigEntry
+	}
+
+	return strconv.ParseBool(val)
+}
+
 func (r *mockRepoForTest) ReadConfigString(key string) (string, error) {
 	// unlike git, the mock can only store one value for the same key
 	val, ok := r.config[key]
@@ -103,9 +131,29 @@ func (r *mockRepoForTest) ReadConfigString(key string) (string, error) {
 	return val, nil
 }
 
+func (r *mockRepoForTest) ReadGlobalConfigString(key string) (string, error) {
+	// unlike git, the mock can only store one value for the same key
+	val, ok := r.globalConfig[key]
+	if !ok {
+		return "", ErrNoConfigEntry
+	}
+
+	return val, nil
+}
+
 // RmConfigs remove all key/value pair matching the key prefix
 func (r *mockRepoForTest) RmConfigs(keyPrefix string) error {
 	for key := range r.config {
+		if strings.HasPrefix(key, keyPrefix) {
+			delete(r.config, key)
+		}
+	}
+	return nil
+}
+
+// RmConfigs remove all key/value pair matching the key prefix
+func (r *mockRepoForTest) RmGlobalConfigs(keyPrefix string) error {
+	for key := range r.globalConfig {
 		if strings.HasPrefix(key, keyPrefix) {
 			delete(r.config, key)
 		}

@@ -30,24 +30,33 @@ type RepoCommon interface {
 	// GetRemotes returns the configured remotes repositories.
 	GetRemotes() (map[string]string, error)
 
-	// StoreConfig store a single key/value pair in the config of the repo
+	RepoConfig
+}
+
+type RepoConfig interface {
+	// StoreConfig store a single key/value pair in the config of the repos
 	StoreConfig(key string, value string) error
+	StoreGlobalConfig(key string, value string) error
 
 	// ReadConfigs read all key/value pair matching the key prefix
 	ReadConfigs(keyPrefix string) (map[string]string, error)
+	ReadGlobalConfigs(keyPrefix string) (map[string]string, error)
 
 	// ReadConfigBool read a single boolean value from the config
 	// Return ErrNoConfigEntry or ErrMultipleConfigEntry if there is zero or more than one entry
 	// for this key
 	ReadConfigBool(key string) (bool, error)
+	ReadGlobalConfigBool(key string) (bool, error)
 
 	// ReadConfigBool read a single string value from the config
 	// Return ErrNoConfigEntry or ErrMultipleConfigEntry if there is zero or more than one entry
 	// for this key
 	ReadConfigString(key string) (string, error)
+	ReadGlobalConfigString(key string) (string, error)
 
 	// RmConfigs remove all key/value pair matching the key prefix
 	RmConfigs(keyPrefix string) error
+	RmGlobalConfigs(keyPrefix string) error
 }
 
 // Repo represents a source code repository.
