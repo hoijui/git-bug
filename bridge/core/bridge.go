@@ -16,8 +16,10 @@ import (
 	"github.com/MichaelMure/git-bug/repository"
 )
 
-var ErrImportNotSupported = errors.New("import is not supported")
-var ErrExportNotSupported = errors.New("export is not supported")
+var (
+	ErrImportNotSupported = errors.New("import is not supported")
+	ErrExportNotSupported = errors.New("export is not supported")
+)
 
 const (
 	KeyTarget = "target"
@@ -133,7 +135,7 @@ func DefaultBridge(repo *cache.RepoCache) (*Bridge, error) {
 
 // ConfiguredBridges return the list of bridge that are configured for the given
 // repo
-func ConfiguredBridges(repo repository.RepoCommon) ([]string, error) {
+func ConfiguredBridges(repo repository.RepoConfig) ([]string, error) {
 	configs, err := repo.ReadConfigs(bridgeConfigKeyPrefix + ".")
 	if err != nil {
 		return nil, errors.Wrap(err, "can't read configured bridges")
@@ -232,7 +234,7 @@ func (b *Bridge) ensureConfig() error {
 	return nil
 }
 
-func loadConfig(repo repository.RepoCommon, name string) (Configuration, error) {
+func loadConfig(repo repository.RepoConfig, name string) (Configuration, error) {
 	keyPrefix := fmt.Sprintf("git-bug.bridge.%s.", name)
 
 	pairs, err := repo.ReadConfigs(keyPrefix)
