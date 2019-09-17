@@ -10,8 +10,10 @@ import (
 	"github.com/MichaelMure/git-bug/util/lamport"
 )
 
-var ErrNoConfigEntry = errors.New("no config entry for the given key")
-var ErrMultipleConfigEntry = errors.New("multiple config entry for the given key")
+var (
+	ErrNoConfigEntry       = errors.New("no config entry for the given key")
+	ErrMultipleConfigEntry = errors.New("multiple config entry for the given key")
+)
 
 // RepoCommon represent the common function the we want all the repo to implement
 type RepoCommon interface {
@@ -33,29 +35,44 @@ type RepoCommon interface {
 	RepoConfig
 }
 
+// RepoConfig represent the functionalities built arround repository and global configurations
 type RepoConfig interface {
 	// StoreConfig store a single key/value pair in the config of the repos
 	StoreConfig(key string, value string) error
+
+	// StoreGlobalConfig store a single key/value pair in the global config
 	StoreGlobalConfig(key string, value string) error
 
 	// ReadConfigs read all key/value pair matching the key prefix
 	ReadConfigs(keyPrefix string) (map[string]string, error)
+
+	// ReadGlobalConfigs read all key/value pairs matching the key prefix from the global config
 	ReadGlobalConfigs(keyPrefix string) (map[string]string, error)
 
 	// ReadConfigBool read a single boolean value from the config
 	// Return ErrNoConfigEntry or ErrMultipleConfigEntry if there is zero or more than one entry
 	// for this key
 	ReadConfigBool(key string) (bool, error)
+
+	// ReadGlobalConfigBool read a single boolean value from the global config
+	// Return ErrNoConfigEntry or ErrMultipleConfigEntry if there is zero or more than one entry
+	// for this key
 	ReadGlobalConfigBool(key string) (bool, error)
 
-	// ReadConfigBool read a single string value from the config
+	// ReadConfigString read a single string value from the config
 	// Return ErrNoConfigEntry or ErrMultipleConfigEntry if there is zero or more than one entry
 	// for this key
 	ReadConfigString(key string) (string, error)
+
+	// ReadGlobalConfigString read a single string from the global config
+	// Return ErrNoConfigEntry or ErrMultipleConfigEntry if there is zero or more than one entry
+	// for this key
 	ReadGlobalConfigString(key string) (string, error)
 
 	// RmConfigs remove all key/value pair matching the key prefix
 	RmConfigs(keyPrefix string) error
+
+	// RmGlobalConfigs remove all key/value pair matching the key prefix in the global config
 	RmGlobalConfigs(keyPrefix string) error
 }
 

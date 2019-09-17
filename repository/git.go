@@ -204,7 +204,7 @@ func (repo *GitRepo) StoreConfig(key string, value string) error {
 	return err
 }
 
-// StoreGlobalConfig store a single key/value pair in the global git config
+// StoreGlobalConfig store a single key/value pair in the global config
 func (repo *GitRepo) StoreGlobalConfig(key string, value string) error {
 	_, err := repo.runGitCommand("config", "--global", "--replace-all", key, value)
 	return err
@@ -247,7 +247,7 @@ func (repo *GitRepo) ReadConfigs(keyPrefix string) (map[string]string, error) {
 	return gitConfigOutputToMap(stdout)
 }
 
-// ReadGlobalConfigs read all key/value pair matching the key prefix in the git config
+// ReadGlobalConfigs read all key/value pairs matching the key prefix from the global config
 func (repo *GitRepo) ReadGlobalConfigs(keyPrefix string) (map[string]string, error) {
 	stdout, err := repo.runGitCommand("config", "--global", "--get-regexp", keyPrefix)
 	//   / \
@@ -263,6 +263,7 @@ func (repo *GitRepo) ReadGlobalConfigs(keyPrefix string) (map[string]string, err
 	return gitConfigOutputToMap(stdout)
 }
 
+// ReadConfigBool read a single boolean value from the config
 func (repo *GitRepo) ReadConfigBool(key string) (bool, error) {
 	val, err := repo.ReadConfigString(key)
 	if err != nil {
@@ -272,6 +273,7 @@ func (repo *GitRepo) ReadConfigBool(key string) (bool, error) {
 	return strconv.ParseBool(val)
 }
 
+// ReadGlobalConfigBool read a single boolean value from the global config
 func (repo *GitRepo) ReadGlobalConfigBool(key string) (bool, error) {
 	val, err := repo.ReadGlobalConfigString(key)
 	if err != nil {
@@ -294,6 +296,7 @@ func readGitConfigs(stdout string) (string, error) {
 	return lines[0], nil
 }
 
+// ReadConfigString read a single string value from the config
 func (repo *GitRepo) ReadConfigString(key string) (string, error) {
 	stdout, err := repo.runGitCommand("config", "--get-all", key)
 	//   / \
@@ -309,6 +312,7 @@ func (repo *GitRepo) ReadConfigString(key string) (string, error) {
 	return readGitConfigs(stdout)
 }
 
+// ReadGlobalConfigString read a single string from the global config
 func (repo *GitRepo) ReadGlobalConfigString(key string) (string, error) {
 	stdout, err := repo.runGitCommand("config", "--global", "--get-all", key)
 	//   / \
@@ -398,10 +402,12 @@ func (repo *GitRepo) rmConfigs(keyPrefix string, global bool) error {
 	return nil
 }
 
+// RmConfigs remove all key/value pair matching the key prefix
 func (repo *GitRepo) RmConfigs(keysPrefix string) error {
 	return repo.rmConfigs(keysPrefix, false)
 }
 
+// RmGlobalConfigs remove all key/value pair matching the key prefix in the global config
 func (repo *GitRepo) RmGlobalConfigs(keysPrefix string) error {
 	return repo.rmConfigs(keysPrefix, true)
 }
