@@ -31,9 +31,7 @@ func (l *labelEventIterator) Len() int {
 }
 
 func (l *labelEventIterator) Swap(i, j int) {
-	element := l.cache[i]
-	l.cache[i] = l.cache[j]
-	l.cache[j] = element
+	l.cache[i], l.cache[j] = l.cache[j], l.cache[i]
 }
 
 func (l *labelEventIterator) Less(i, j int) bool {
