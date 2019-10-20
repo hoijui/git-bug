@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 
 import BugQuery from './bug/BugQuery';
 import ListQuery from './list/ListQuery';
+import SimpleMenu from './SimpleMenu';
+import NewBug from './bug/NewBug';
 
 const useStyles = makeStyles(theme => ({
   appTitle: {
@@ -25,6 +27,7 @@ export default function App() {
       <CssBaseline />
       <AppBar position="static" color="primary">
         <Toolbar>
+          <SimpleMenu/>
           <Link to="/" className={classes.appTitle}>
             git-bug webui
           </Link>
@@ -33,6 +36,7 @@ export default function App() {
       <Switch>
         <Route path="/" exact component={ListQuery} />
         <Route path="/bug/:id" exact component={BugQuery} />
+        <Route path="/newbug" exact component={NewBug} />
       </Switch>
     </>
   );
