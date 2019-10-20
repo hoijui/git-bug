@@ -12,6 +12,10 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     textDecoration: 'none',
   },
+  link: {
+    color: theme.palette.text.primary,
+    textDecoration: 'none',
+  }
 }));
 
 export default function SimpleMenu() {
@@ -40,7 +44,12 @@ export default function SimpleMenu() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-        <Link to="/newbug" className={classes.appTitle}>
+        <Link to="/" className={classes.link}>
+            List bugs
+        </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+        <Link to="/newbug" className={classes.link}>
             New Bug
         </Link>
         </MenuItem>

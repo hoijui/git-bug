@@ -105,18 +105,6 @@ export default function NewBug({history}) {
                 />
               </div>
               <div>
-                <TextField
-                  id="labels"
-                  label="Labels"
-                  type="search"
-                  value={JSON.stringify(data)}
-                  className={classes.textField}
-                  margin="normal"
-                  variant="outlined"
-                  fullWidth
-                />
-              </div>
-              <div>
                 <Button type="submit" variant="contained"
                   className={classes.button}>
                   Save Bug
