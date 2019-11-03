@@ -1,0 +1,26 @@
+@base <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix :      <http://git-bug.io/ontologies/0.1/entity#S> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<http://git-bug.io/ontologies/0.1/entity>
+  a owl:Ontology ;
+  owl:versionInfo "0.1" ;
+  owl:versionIRI <http://git-bug.io/ontologies/0.1/entity> ;
+  dc:title   "git-bug-norm - entity"@en ;
+  rdfs:label "git-bug-norm - entity"@en ;
+  dc:description "A standard for a data-model of distributed entities. It forms the base for serializing objects and their properties in a git data storage. - Entity"@en ;
+  rdfs:comment   "A standard for a data-model of distributed entities. It forms the base for serializing objects and their properties in a git data storage. - Entity"@en ;
+  terms:contributor "Michael Muré <michael.mure@consensys.net>" ;
+  terms:contributor "Robin Vobruba <hoijui.quaero@gmail.com>" ;
+  terms:license "GPL v3"^^xsd:string .
+
+# Classes
+
+:Entity
+  a owl:Class ;
+  rdfs:label "Entity" ;
+  rdfs:comment "An entity is the abstract base unit of anything that might be stored in a git blob." .

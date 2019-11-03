@@ -1,0 +1,129 @@
+@base <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix :      <http://git-bug.io/ontologies/0.1/identity#> .
+@prefix ent:   <http://git-bug.io/ontologies/0.1/entity#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/2000/01/rdf-syntax#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<http://git-bug.io/ontologies/0.1/identity>
+  a owl:Ontology ;
+  owl:versionInfo "0.1" ;
+  owl:versionIRI <http://git-bug.io/ontologies/0.1/identity> ;
+  dc:title   "git-bug-norm - identity"@en ;
+  rdfs:label "git-bug-norm - identity"@en ;
+  dc:description "A standard for a data-model of distributed entities. It forms the base for serializing objects and their properties in a git data storage. - Identity"@en ;
+  rdfs:comment   "A standard for a data-model of distributed entities. It forms the base for serializing objects and their properties in a git data storage. - Identity"@en ;
+  terms:contributor "Michael Muré <michael.mure@consensys.net>" ;
+  terms:contributor "Robin Vobruba <hoijui.quaero@gmail.com>" ;
+  terms:license "GPL v3"^^xsd:string ;
+  terms:provenance "v2.0 Added new annotations to the ontology using standard/well-know annotation properties v1.5. Removed protege.owl import and references. Made ontology URI date-independent v1.4. Added Food class (used in domain/range of hasIngredient), Added several hasCountryOfOrigin restrictions on pizzas, Made hasTopping invers functional"@en .
+
+# Classes
+
+:Identity
+  a owl:Class ;
+  rdfs:subClassOf ent:Entity, foaf:Agent ;
+  rdfs:label "Identity" ;
+  rdfs:comment "Represents a user or group of users." .
+
+:BareIdentity
+  a owl:DeprecatedClass ;
+  owl:equivalentClass :Identity ;
+  rdfs:subClassOf ent:Entity, foaf:Agent ;
+  rdfs:label "Bare" ;
+  rdfs:comment "Legacy version or an Identity." .
+
+:Key
+  a owl:Class ;
+  rdfs:label "Key" ;
+  rdfs:comment "Represents a (Public-)Key." .
+
+# Properties
+
+:fingerprint
+  a rdf:Property ;
+  rdfs:domain :Key ;
+  rdfs:range xsd:string ;
+  owl:cardinality 1 .
+
+:pub_key
+  a rdf:Property ;
+  rdfs:domain :Key ;
+  rdfs:range xsd:string ;
+  owl:cardinality 1 .
+
+:version
+  a rdf:Property ;
+#  rdfs:isDefinedBy <http://git-bug.io/identity/> ;
+	rdfs:label "version" ;
+	rdfs:comment "The protocol version that describes is used by the instance of an Identity." ;
+  rdfs:domain :Identity ;
+  rdfs:range xsd:unsignedInt .
+
+:time
+  a rdf:Property ;
+	rdfs:label "lampert_time" ;
+	rdfs:comment "The lampert time of the moment of creation of the operation in lampert space, which is a relative/relational value only (relative to other such time-stamps), not absolute." ;
+  rdfs:domain :Identity ;
+  rdfs:range xsd:unsignedInt ;
+  owl:cardinality 1 .
+
+:unix_time
+  a rdf:Property ;
+	rdfs:label "unix_time" ;
+	rdfs:comment "The timestamp of the moment of creation of the operation, as recorded on the original authors machine, supposedly." ;
+  rdfs:domain :Identity ;
+  rdfs:range xsd:long ;
+  owl:cardinality 1 .
+
+:name
+  a rdf:Property ;
+  rdfs:domain :Identity, :BareIdentity ;
+  rdfs:range xsd:string ;
+  owl:minCardinality 0 ;
+  owl:maxCardinality 1 .
+
+:email
+  a foaf:mbox ;
+  rdfs:domain :Identity, :BareIdentity ;
+  rdfs:range xsd:string ;
+  owl:minCardinality 0 ;
+  owl:maxCardinality 1 .
+
+:login
+  a rdf:Property ;
+  rdfs:domain :Identity, :BareIdentity ;
+  rdfs:range xsd:string ;
+  owl:minCardinality 0 ;
+  owl:maxCardinality 1 .
+
+:avatar_url
+  a rdf:Property ;
+  rdfs:domain :Identity, :BareIdentity ;
+  rdfs:range xsd:string ;
+  owl:minCardinality 0 ;
+  owl:maxCardinality 1 .
+
+:pub_key
+  a rdf:Property ;
+  rdfs:domain :Identity ;
+  owl:minCardinality 0 .
+
+:nonce
+  a rdf:Property ;
+	rdfs:label "nonce" ;
+	rdfs:comment "In cryptography, a nonce is an arbitrary number that can be used just once in a cryptographic communication." ;
+  rdfs:domain :Identity ;
+  owl:minCardinality 0 ;
+  owl:maxCardinality 1 .
+#  rdfs:range xsd:array[xsd:byte] .
+
+:metadata
+  a rdf:Property ;
+  rdfs:domain :Identity ;
+  owl:minCardinality 0 .
+#  rdfs:range xsd:map[xsd:string, xsd:string] .

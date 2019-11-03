@@ -1,0 +1,221 @@
+@base <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix :      <http://git-bug.io/ontologies/0.1/bug#> .
+@prefix ent:   <http://git-bug.io/ontologies/0.1/entity#> .
+@prefix ident: <http://git-bug.io/ontologies/0.1/identity#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+<http://git-bug.io/ontologies/0.1/bug>
+  a owl:Ontology ;
+  owl:versionInfo "0.1" ;
+  owl:versionIRI <http://git-bug.io/ontologies/0.1/bug> ;
+  dc:title   "git-bug-norm - bug"@en ;
+  rdfs:label "git-bug-norm - bug"@en ;
+  dc:description "A standard for a data-model of distributed issues/bugs."@en ;
+  rdfs:comment   "A standard for a data-model of distributed issues/bugs."@en ;
+  terms:contributor "Michael Muré <michael.mure@consensys.net>" ;
+  terms:contributor "Robin Vobruba <hoijui.quaero@gmail.com>" ;
+  terms:license "GPL v3"^^xsd:string ;
+  terms:provenance "v2.0 Added new annotations to the ontology using standard/well-know annotation properties v1.5. Removed protege.owl import and references. Made ontology URI date-independent v1.4. Added Food class (used in domain/range of hasIngredient), Added several hasCountryOfOrigin restrictions on pizzas, Made hasTopping invers functional"@en .
+
+# Classes
+
+:Issue
+  a owl:Class ;
+  rdfs:subclassOf ent:Entity ;
+  rdfs:label "Bug"@en ;
+  rdfs:comment "Represents an issue or bug."@en .
+
+:Operation
+  a owl:Class ;
+  rdfs:label "Operaton"@en ;
+  rdfs:comment "A single operation on an issue."@en .
+
+:CreateOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 1 ;
+  rdfs:label "CreateOp"@en ;
+  rdfs:comment "Creates a new issue."@en ;
+  :type "CreateOp" .
+
+:SetTitleOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 2 ;
+  rdfs:label "SetTitleOp"@en ;
+  rdfs:comment "Sets a new title."@en ;
+  :type "SetTitleOp" .
+
+:AddCommentOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 3 ;
+  rdfs:label "AddCommentOp"@en ;
+  rdfs:comment "Adds a new comment to an issue."@en ;
+  :type "AddCommentOp" .
+
+:SetStatusOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 4 ;
+  rdfs:label "SetStatusOp"@en ;
+  rdfs:comment "Sets the status of an issue."@en ;
+  :type "SetStatusOp" .
+
+:LabelChangeOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 5 ;
+  rdfs:label "LabelChangeOp"@en ;
+  rdfs:comment "Adds and/or removes labels to an issue."@en ;
+  :type "LabelChangeOp" .
+
+:EditCommentOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 6 ;
+  rdfs:label "EditCommentOp"@en ;
+  rdfs:comment "Edits a comment to an issue."@en ;
+  :type "EditCommentOp" .
+
+:NoOpOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 7 ;
+  rdfs:label "NoOpOp"@en ;
+  rdfs:comment "Does nothing (noop)."@en ;
+  :type "NoOpOp" .
+
+:SetMetadataOperation
+  a owl:Class ;
+  rdfs:subclassOf :Operation ;
+  :op_id 8 ;
+  rdfs:label "SetMetadataOp"@en ;
+  rdfs:comment "Sets metadata."@en ;
+  :type "SetMetadataOp" .
+
+:MapEntry
+  a owl:Class ;
+  rdfs:label "MapEntry"@en ;
+  rdfs:comment "Represents a Key-Value pair in a map."@en .
+
+:Status
+  a owl:Class ;
+  rdfs:label "Issue status"@en .
+
+:Label
+  a owl:Class ;
+  rdfs:label "Issue label"@en .
+
+# Individuals
+
+:OpenStatus
+  a :Status ;
+  rdfs:label "Open"@en ;
+  rdfs:label "Offen"@de .
+
+:ClosedStatus
+  a :Status ;
+  rdfs:label "Closed"@en ;
+  rdfs:label "Geschlossen"@de .
+  
+# Annotations
+
+:op_id
+  a owl:AnnotationProperty .
+# These are not allwoed in OWL DL for annotation properties
+#  rdfs:domain :Operation ;
+#  rdfs:range xsd:uint32 ;
+#  owl:cardinality 1 .
+
+:type
+  a owl:AnnotationProperty .
+# These are not allwoed in OWL DL for annotation properties
+#  rdfs:domain :Operation ;
+#  rdfs:range xsd:string ;
+#  owl:cardinality 1 .
+
+# Properties
+
+:map_key
+  a owl:DatatypeProperty ;
+  rdfs:domain :MapEntry ;
+  rdfs:range xsd:string ;
+  owl:cardinality 1 .
+
+:map_value
+  a owl:DatatypeProperty ;
+  rdfs:domain "&this;:MapEntry" ;
+  rdfs:range xsd:string ;
+  owl:cardinality 1 .
+
+:operation
+  a owl:DatatypeProperty ;
+  rdfs:domain :Issue ;
+  rdfs:range :Operation ;
+  owl:minCardinality 1 .
+
+:title
+  a owl:DatatypeProperty ;
+  rdfs:domain :CreateOperation, :SetTitleOperation ;
+  rdfs:range xsd:string ;
+  owl:cardinality 1 .
+
+:message
+  a owl:DatatypeProperty ;
+  rdfs:domain :CreateOperation, :AddCommentOperation, :EditCommentOperation ;
+  rdfs:range xsd:string ;
+  owl:cardinality 1 .
+
+:file
+  a owl:DatatypeProperty ;
+  rdfs:domain :CreateOperation, :AddCommentOperation, :EditCommentOperation ;
+  rdfs:range foaf:sha1 ;
+  owl:minCardinality 0 .
+
+:old_title
+  a owl:DatatypeProperty ;
+  rdfs:domain :SetTitleOperation ;
+  rdfs:range xsd:string ;
+  owl:cardinality 1 .
+
+:status
+  a owl:ObjectProperty ;
+  rdfs:domain :SetStatusOperation ;
+  rdfs:range :Status ;
+  owl:cardinality 1 .
+
+:label_added
+  a owl:ObjectProperty ;
+  rdfs:domain :LabelChangeOperation ;
+  rdfs:range :Label ;
+  owl:minCardinality 0 .
+
+:label_removed
+  a owl:ObjectProperty ;
+  rdfs:domain :LabelChangeOperation ;
+  rdfs:range :Label ;
+  owl:minCardinality 0 .
+
+:target
+  a owl:ObjectProperty ;
+  rdfs:domain :EditCommentOperation ;
+  rdfs:range :Comment ;
+  owl:cardinality 1 .
+
+:target
+  a owl:ObjectProperty ;
+  rdfs:domain :SetMetadataOperation ;
+  rdfs:range :TODO ;
+  owl:cardinality 1 .
+
+:metadata
+  a owl:ObjectProperty ;
+  rdfs:domain :SetMetadataOperation ;
+  rdfs:range :MapEntry ;
+  owl:minCardinality 1 .
