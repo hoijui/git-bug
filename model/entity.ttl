@@ -1,5 +1,5 @@
 @base          <http://git-bug.io/ontologies/0.1/entity> .
-@prefix :      <http://git-bug.io/ontologies/0.1/entity#S> .
+@prefix ent:   <http://git-bug.io/ontologies/0.1/entity#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 @prefix dc:    <http://purl.org/dc/elements/1.1/> .
 @prefix terms: <http://purl.org/dc/terms/> .
@@ -20,7 +20,7 @@
 
 # Classes
 
-:Entity
+ent:Entity
   a owl:Class ;
   rdfs:label "Entity" ;
   rdfs:comment "An entity is the abstract base unit of anything that might be stored in a git blob." .

@@ -1,5 +1,5 @@
 @base          <http://git-bug.io/ontologies/0.1/bug> .
-@prefix :      <http://git-bug.io/ontologies/0.1/bug#> .
+@prefix bug:   <http://git-bug.io/ontologies/0.1/bug#> .
 @prefix ent:   <http://git-bug.io/ontologies/0.1/entity#> .
 @prefix ident: <http://git-bug.io/ontologies/0.1/identity#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
@@ -24,198 +24,198 @@
 
 # Classes
 
-:Issue
+bug:Issue
   a owl:Class ;
   rdfs:subclassOf ent:Entity ;
   rdfs:label "Bug"@en ;
   rdfs:comment "Represents an issue or bug."@en .
 
-:Operation
+bug:Operation
   a owl:Class ;
   rdfs:label "Operaton"@en ;
   rdfs:comment "A single operation on an issue."@en .
 
-:CreateOperation
+bug:CreateOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 1 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 1 ;
   rdfs:label "CreateOp"@en ;
   rdfs:comment "Creates a new issue."@en ;
-  :type "CreateOp" .
+  bug:type "CreateOp" .
 
-:SetTitleOperation
+bug:SetTitleOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 2 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 2 ;
   rdfs:label "SetTitleOp"@en ;
   rdfs:comment "Sets a new title."@en ;
-  :type "SetTitleOp" .
+  bug:type "SetTitleOp" .
 
-:AddCommentOperation
+bug:AddCommentOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 3 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 3 ;
   rdfs:label "AddCommentOp"@en ;
   rdfs:comment "Adds a new comment to an issue."@en ;
-  :type "AddCommentOp" .
+  bug:type "AddCommentOp" .
 
-:SetStatusOperation
+bug:SetStatusOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 4 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 4 ;
   rdfs:label "SetStatusOp"@en ;
   rdfs:comment "Sets the status of an issue."@en ;
-  :type "SetStatusOp" .
+  bug:type "SetStatusOp" .
 
-:LabelChangeOperation
+bug:LabelChangeOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 5 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 5 ;
   rdfs:label "LabelChangeOp"@en ;
   rdfs:comment "Adds and/or removes labels to an issue."@en ;
-  :type "LabelChangeOp" .
+  bug:type "LabelChangeOp" .
 
-:EditCommentOperation
+bug:EditCommentOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 6 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 6 ;
   rdfs:label "EditCommentOp"@en ;
   rdfs:comment "Edits a comment to an issue."@en ;
-  :type "EditCommentOp" .
+  bug:type "EditCommentOp" .
 
-:NoOpOperation
+bug:NoOpOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 7 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 7 ;
   rdfs:label "NoOpOp"@en ;
   rdfs:comment "Does nothing (noop)."@en ;
-  :type "NoOpOp" .
+  bug:type "NoOpOp" .
 
-:SetMetadataOperation
+bug:SetMetadataOperation
   a owl:Class ;
-  rdfs:subclassOf :Operation ;
-  :op_id 8 ;
+  rdfs:subclassOf bug:Operation ;
+  bug:op_id 8 ;
   rdfs:label "SetMetadataOp"@en ;
   rdfs:comment "Sets metadata."@en ;
-  :type "SetMetadataOp" .
+  bug:type "SetMetadataOp" .
 
-:MapEntry
+bug:MapEntry
   a owl:Class ;
   rdfs:label "MapEntry"@en ;
   rdfs:comment "Represents a Key-Value pair in a map."@en .
 
-:Status
+bug:Status
   a owl:Class ;
   rdfs:label "Issue status"@en .
 
-:Label
+bug:Label
   a owl:Class ;
   rdfs:label "Issue label"@en .
 
 # Individuals
 
-:OpenStatus
-  a :Status ;
+bug:OpenStatus
+  a bug:Status ;
   rdfs:label "Open"@en ;
   rdfs:label "Offen"@de .
 
-:ClosedStatus
-  a :Status ;
+bug:ClosedStatus
+  a bug:Status ;
   rdfs:label "Closed"@en ;
   rdfs:label "Geschlossen"@de .
   
 # Annotations
 
-:op_id
+bug:op_id
   a owl:AnnotationProperty .
 # These are not allwoed in OWL DL for annotation properties
-#  rdfs:domain :Operation ;
+#  rdfs:domain bug:Operation ;
 #  rdfs:range xsd:uint32 ;
 #  owl:cardinality 1 .
 
-:type
+bug:type
   a owl:AnnotationProperty .
 # These are not allwoed in OWL DL for annotation properties
-#  rdfs:domain :Operation ;
+#  rdfs:domain bug:Operation ;
 #  rdfs:range xsd:string ;
 #  owl:cardinality 1 .
 
 # Properties
 
-:map_key
+bug:map_key
   a owl:DatatypeProperty ;
-  rdfs:domain :MapEntry ;
+  rdfs:domain bug:MapEntry ;
   rdfs:range xsd:string ;
   owl:cardinality 1 .
 
-:map_value
+bug:map_value
   a owl:DatatypeProperty ;
   rdfs:domain "&this;:MapEntry" ;
   rdfs:range xsd:string ;
   owl:cardinality 1 .
 
-:operation
+bug:operation
   a owl:DatatypeProperty ;
-  rdfs:domain :Issue ;
-  rdfs:range :Operation ;
+  rdfs:domain bug:Issue ;
+  rdfs:range bug:Operation ;
   owl:minCardinality 1 .
 
-:title
+bug:title
   a owl:DatatypeProperty ;
-  rdfs:domain :CreateOperation, :SetTitleOperation ;
+  rdfs:domain bug:CreateOperation, bug:SetTitleOperation ;
   rdfs:range xsd:string ;
   owl:cardinality 1 .
 
-:message
+bug:message
   a owl:DatatypeProperty ;
-  rdfs:domain :CreateOperation, :AddCommentOperation, :EditCommentOperation ;
+  rdfs:domain bug:CreateOperation, bug:AddCommentOperation, bug:EditCommentOperation ;
   rdfs:range xsd:string ;
   owl:cardinality 1 .
 
-:file
+bug:file
   a owl:DatatypeProperty ;
-  rdfs:domain :CreateOperation, :AddCommentOperation, :EditCommentOperation ;
+  rdfs:domain bug:CreateOperation, bug:AddCommentOperation, bug:EditCommentOperation ;
   rdfs:range foaf:sha1 ;
   owl:minCardinality 0 .
 
-:old_title
+bug:old_title
   a owl:DatatypeProperty ;
-  rdfs:domain :SetTitleOperation ;
+  rdfs:domain bug:SetTitleOperation ;
   rdfs:range xsd:string ;
   owl:cardinality 1 .
 
-:status
+bug:status
   a owl:ObjectProperty ;
-  rdfs:domain :SetStatusOperation ;
-  rdfs:range :Status ;
+  rdfs:domain bug:SetStatusOperation ;
+  rdfs:range bug:Status ;
   owl:cardinality 1 .
 
-:label_added
+bug:label_added
   a owl:ObjectProperty ;
-  rdfs:domain :LabelChangeOperation ;
-  rdfs:range :Label ;
+  rdfs:domain bug:LabelChangeOperation ;
+  rdfs:range bug:Label ;
   owl:minCardinality 0 .
 
-:label_removed
+bug:label_removed
   a owl:ObjectProperty ;
-  rdfs:domain :LabelChangeOperation ;
-  rdfs:range :Label ;
+  rdfs:domain bug:LabelChangeOperation ;
+  rdfs:range bug:Label ;
   owl:minCardinality 0 .
 
-:target
+bug:target
   a owl:ObjectProperty ;
-  rdfs:domain :EditCommentOperation ;
-  rdfs:range :Comment ;
+  rdfs:domain bug:EditCommentOperation ;
+  rdfs:range bug:Comment ;
   owl:cardinality 1 .
 
-:target
+bug:target
   a owl:ObjectProperty ;
-  rdfs:domain :SetMetadataOperation ;
-  rdfs:range :TODO ;
+  rdfs:domain bug:SetMetadataOperation ;
+  rdfs:range bug:TODO ;
   owl:cardinality 1 .
 
-:metadata
+bug:metadata
   a owl:ObjectProperty ;
-  rdfs:domain :SetMetadataOperation ;
-  rdfs:range :MapEntry ;
+  rdfs:domain bug:SetMetadataOperation ;
+  rdfs:range bug:MapEntry ;
   owl:minCardinality 1 .
