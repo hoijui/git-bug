@@ -1,5 +1,5 @@
 @base          <http://git-bug.io/ontologies/0.1/bug> .
-@prefix bug:   <http://git-bug.io/ontologies/0.1/bug#> .
+@prefix bug:   <#> .
 @prefix ent:   <http://git-bug.io/ontologies/0.1/entity#> .
 @prefix ident: <http://git-bug.io/ontologies/0.1/identity#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
