@@ -59,23 +59,23 @@ ident:key
 ident:version
   a owl:DataProperty ;
 #  rdfs:isDefinedBy <http://git-bug.io/identity/> ;
-	rdfs:label "version" ;
-	rdfs:comment "The protocol version that describes is used by the instance of an Identity." ;
+  rdfs:label "version" ;
+  rdfs:comment "The protocol version that describes is used by the instance of an Identity." ;
   rdfs:domain ident:Identity ;
   rdfs:range xsd:unsignedInt .
 
 ident:time
   a owl:DataProperty ;
-	rdfs:label "lampert_time" ;
-	rdfs:comment "The lampert time of the moment of creation of the operation in lampert space, which is a relative/relational value only (relative to other such time-stamps), not absolute." ;
+  rdfs:label "lampert_time" ;
+  rdfs:comment "The lampert time of the moment of creation of the operation in lampert space, which is a relative/relational value only (relative to other such time-stamps), not absolute." ;
   rdfs:domain ident:Identity ;
   rdfs:range xsd:unsignedInt ;
   owl:cardinality 1 .
 
 ident:unix_time
   a owl:DataProperty ;
-	rdfs:label "unix_time" ;
-	rdfs:comment "The timestamp of the moment of creation of the operation, as recorded on the original authors machine, supposedly." ;
+  rdfs:label "unix_time" ;
+  rdfs:comment "The timestamp of the moment of creation of the operation, as recorded on the original authors machine, supposedly." ;
   rdfs:domain ident:Identity ;
   rdfs:range xsd:long ;
   owl:cardinality 1 .
@@ -116,8 +116,8 @@ ident:pub_key
 
 ident:nonce
   a owl:ObjectProperty ;
-	rdfs:label "nonce" ;
-	rdfs:comment "In cryptography, a nonce is an arbitrary number that can be used just once in a cryptographic communication." ;
+  rdfs:label "nonce" ;
+  rdfs:comment "In cryptography, a nonce is an arbitrary number that can be used just once in a cryptographic communication." ;
   rdfs:domain ident:Identity ;
   owl:minCardinality 0 ;
   owl:maxCardinality 1 .
