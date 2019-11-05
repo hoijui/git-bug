@@ -121,10 +121,10 @@ ident:nonce
   rdfs:domain ident:Identity ;
   owl:minCardinality 0 ;
   owl:maxCardinality 1 .
-#  rdfs:range xsd:array[xsd:byte] .
+#  rdfs:range xsd:array[xsd:byte] . # TODO
 
 ident:metadata
   a owl:ObjectProperty ;
   rdfs:domain ident:Identity ;
   owl:minCardinality 0 .
-#  rdfs:range xsd:map[xsd:string, xsd:string] .
+#  rdfs:range xsd:map[xsd:string, xsd:string] . # TODO
