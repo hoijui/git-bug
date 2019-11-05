@@ -1,4 +1,4 @@
-@base <http://www.w3.org/2000/01/rdf-schema#> .
+@base          <http://git-bug.io/ontologies/0.1/entity> .
 @prefix :      <http://git-bug.io/ontologies/0.1/entity#S> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 @prefix dc:    <http://purl.org/dc/elements/1.1/> .
@@ -6,10 +6,10 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 
-<http://git-bug.io/ontologies/0.1/entity>
+<>
   a owl:Ontology ;
   owl:versionInfo "0.1" ;
-  owl:versionIRI <http://git-bug.io/ontologies/0.1/entity> ;
+  owl:versionIRI <> ;
   dc:title   "git-bug-norm - entity"@en ;
   rdfs:label "git-bug-norm - entity"@en ;
   dc:description "A standard for a data-model of distributed entities. It forms the base for serializing objects and their properties in a git data storage. - Entity"@en ;
