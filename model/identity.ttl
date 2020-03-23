@@ -2,7 +2,6 @@
 @prefix ident: <#> .
 @prefix ent:   <http://git-bug.io/ontologies/0.1/entity#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
-@prefix dc:    <http://purl.org/dc/elements/1.1/> .
 @prefix terms: <http://purl.org/dc/terms/> .
 @prefix rdf:   <http://www.w3.org/2000/01/rdf-syntax#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
@@ -13,9 +12,7 @@
   a owl:Ontology ;
   owl:versionInfo "0.1" ;
   owl:versionIRI <> ;
-  dc:title   "git-bug-norm - identity"@en ;
   rdfs:label "git-bug-norm - identity"@en ;
-  dc:description "A standard for a data-model of distributed entities. It forms the base for serializing objects and their properties in a git data storage. - Identity"@en ;
   rdfs:comment   "A standard for a data-model of distributed entities. It forms the base for serializing objects and their properties in a git data storage. - Identity"@en ;
   terms:contributor "Michael Muré <michael.mure@consensys.net>" ;
   terms:contributor "Robin Vobruba <hoijui.quaero@gmail.com>" ;
