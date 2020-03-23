@@ -17,7 +17,7 @@
   terms:contributor "Michael Muré <michael.mure@consensys.net>" ;
   terms:contributor "Robin Vobruba <hoijui.quaero@gmail.com>" ;
   terms:license "GPL v3"^^xsd:string ;
-  terms:provenance "v2.0 Added new annotations to the ontology using standard/well-know annotation properties v1.5. Removed protege.owl import and references. Made ontology URI date-independent v1.4. Added Food class (used in domain/range of hasIngredient), Added several hasCountryOfOrigin restrictions on pizzas, Made hasTopping invers functional"@en .
+  terms:provenance "TODO -- v2.0 Added new annotations to the ontology using standard/well-know annotation properties v1.5. Removed protege.owl import and references. Made ontology URI date-independent v1.4. Added Food class (used in domain/range of hasIngredient), Added several hasCountryOfOrigin restrictions on pizzas, Made hasTopping invers functional"@en .
 
 # Classes
 
